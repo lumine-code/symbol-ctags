@@ -88,6 +88,12 @@ jobs:
       - name: Rebuild native modules for Electron
         working-directory: lumine
         run: npm run build
+      # The package's own checkout carries the native ctags addon; the editor's
+      # rebuild only covers the editor tree, so build this one for the same
+      # Electron ABI before the specs load it.
+      - name: Rebuild the package's native modules for Electron
+        working-directory: lumine
+        run: npx electron-rebuild -m ../symbol-provider-ctags
       - name: Run the Jasmine spec suite
         working-directory: lumine
         timeout-minutes: 20
