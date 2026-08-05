@@ -48,14 +48,14 @@
     }
   },
   "dependencies": {
-    "@lumine-code/ctags": "https://github.com/lumine-code/node-ctags.git#c4272afbc8dcd3c0acd137d85d1127995dd31f76",
-    "@lumine-code/fs-plus": "https://github.com/lumine-code/fs-plus.git#742e3e166f56261189ff245a63967b8f1970fadd",
-    "@lumine-code/underscore-plus": "https://github.com/lumine-code/underscore-plus.git#2b75d264c2ca01d27ee69d7cd05610a097011274",
+    "@lumine-code/ctags": "https://github.com/lumine-code/node-ctags.git#733b8aa91f59219b439bccb51ed6da78b42086c3",
+    "@lumine-code/fs-plus": "https://github.com/lumine-code/fs-plus.git#e8cfeab56a20f8c31c77f5b477258296d808a350",
+    "@lumine-code/underscore-plus": "https://github.com/lumine-code/underscore-plus.git#91bdb6152d7b3f86f198917707e258af5470db9f",
     "async": "3.2.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@lumine-code/temp": "https://github.com/lumine-code/node-temp.git#929dfd04196566b21baef93fddc24a19db329bd0",
+    "@lumine-code/temp": "https://github.com/lumine-code/node-temp.git#150772eb009638e11ed741bf8548aa74c8e5dd1c",
     "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^18.2.2",
