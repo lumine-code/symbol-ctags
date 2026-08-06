@@ -39,7 +39,7 @@ describe("CTagsProvider", () => {
 
     provider = new CTagsProvider();
 
-    atom.project.setPaths([temp.mkdirSync("other-dir-"), temp.mkdirSync("atom-symbols-view-")]);
+    atom.project.setPaths([temp.mkdirSync("other-dir-"), temp.mkdirSync("symbol-ctags-spec-")]);
 
     directory = atom.project.getDirectories()[1];
     fs.copySync(path.join(__dirname, "fixtures", "js"), atom.project.getPaths()[1]);
@@ -47,7 +47,7 @@ describe("CTagsProvider", () => {
 
   it("identifies its project root correctly", () => {
     let root = provider.getPackageRoot();
-    expect(root).toContain("symbol-provider-ctags");
+    expect(root).toContain("symbol-ctags");
     expect(fs.existsSync(path.join(root, "vendor", "ctags-darwin"))).toBe(true);
   });
 
@@ -142,7 +142,7 @@ describe("CTagsProvider", () => {
     });
 
     it("correctly identifies the tag for a C preprocessor macro", async () => {
-      atom.project.setPaths([temp.mkdirSync("atom-symbols-view-c-")]);
+      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-c-")]);
       fs.copySync(path.join(__dirname, "fixtures", "c"), atom.project.getPaths()[0]);
 
       await atom.packages.activatePackage("language-c");
@@ -169,7 +169,7 @@ describe("CTagsProvider", () => {
     });
 
     it("includes ? and ! characters in ruby symbols", async () => {
-      atom.project.setPaths([temp.mkdirSync("atom-symbols-view-ruby-")]);
+      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
       fs.copySync(path.join(__dirname, "fixtures", "ruby"), atom.project.getPaths()[0]);
 
       await atom.packages.activatePackage("language-ruby");
@@ -200,7 +200,7 @@ describe("CTagsProvider", () => {
     });
 
     it("understands assignment ruby method definitions", async () => {
-      atom.project.setPaths([temp.mkdirSync("atom-symbols-view-ruby-")]);
+      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
       fs.copySync(path.join(__dirname, "fixtures", "ruby"), atom.project.getPaths()[0]);
 
       await atom.packages.activatePackage("language-ruby");
@@ -231,7 +231,7 @@ describe("CTagsProvider", () => {
     });
 
     it("understands fully qualified ruby constant definitions", async () => {
-      atom.project.setPaths([temp.mkdirSync("atom-symbols-view-ruby-")]);
+      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
       fs.copySync(path.join(__dirname, "fixtures", "ruby"), atom.project.getPaths()[0]);
 
       await atom.packages.activatePackage("language-ruby");

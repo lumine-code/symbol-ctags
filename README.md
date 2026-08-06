@@ -1,6 +1,6 @@
-# symbol-provider-ctags
+# symbol-ctags
 
-Provides symbols to symbols-view via ctags.
+Provides symbols via universal-ctags.
 
 ## Features
 
@@ -11,11 +11,11 @@ Provides symbols to symbols-view via ctags.
 
 ## Installation
 
-To install `symbol-provider-ctags` search for _symbol-provider-ctags_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/symbol-provider-ctags`.
+To install `symbol-ctags` search for _symbol-ctags_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/symbol-ctags`.
 
 ## Services
 
-- **symbol.provider** (`1.0.0`): provided to supply symbols for a given file or project to symbols-view.
+- **symbol.provider** (`1.0.0`): provided to supply symbols for a given file or project.
 
 ## Contributing
 

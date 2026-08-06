@@ -1,8 +1,8 @@
 {
-  "name": "symbol-provider-ctags",
+  "name": "symbol-ctags",
   "author": "lumine-code",
   "version": "1.0.0",
-  "description": "Provides symbols to symbols-view via ctags.",
+  "description": "Provides symbols via universal-ctags.",
   "keywords": [
     "navigation",
     "tags-file",
@@ -10,9 +10,9 @@
     "outline",
     "universal-ctags"
   ],
-  "repository": "https://github.com/lumine-code/symbol-provider-ctags",
+  "repository": "https://github.com/lumine-code/symbol-ctags",
   "bugs": {
-    "url": "https://github.com/lumine-code/symbol-provider-ctags/issues"
+    "url": "https://github.com/lumine-code/symbol-ctags/issues"
   },
   "license": "MIT",
   "main": "./lib/main",
