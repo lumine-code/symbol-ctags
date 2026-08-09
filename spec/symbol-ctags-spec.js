@@ -4,7 +4,7 @@ const temp = require("@lumine-code/temp");
 const CTagsProvider = require("../lib/ctags-provider");
 
 function getEditor() {
-  return atom.workspace.getActiveTextEditor();
+  return lumine.workspace.getActiveTextEditor();
 }
 
 async function wait(ms) {
@@ -15,7 +15,7 @@ async function getProjectSymbols(provider, editor) {
   let symbols = await provider.getSymbols({
     type: "project",
     editor,
-    paths: atom.project.getPaths(),
+    paths: lumine.project.getPaths(),
   });
   return symbols;
 }
@@ -24,7 +24,7 @@ async function findDeclarationInProject(provider, editor) {
   let symbols = await provider.getSymbols({
     type: "project-find",
     editor,
-    paths: atom.project.getPaths(),
+    paths: lumine.project.getPaths(),
     word: editor.getWordUnderCursor(),
   });
   return symbols;
@@ -39,10 +39,10 @@ describe("CTagsProvider", () => {
 
     provider = new CTagsProvider();
 
-    atom.project.setPaths([temp.mkdirSync("other-dir-"), temp.mkdirSync("symbol-ctags-spec-")]);
+    lumine.project.setPaths([temp.mkdirSync("other-dir-"), temp.mkdirSync("symbol-ctags-spec-")]);
 
-    directory = atom.project.getDirectories()[1];
-    fs.copySync(path.join(__dirname, "fixtures", "js"), atom.project.getPaths()[1]);
+    directory = lumine.project.getDirectories()[1];
+    fs.copySync(path.join(__dirname, "fixtures", "js"), lumine.project.getPaths()[1]);
   });
 
   it("identifies its project root correctly", () => {
@@ -53,7 +53,7 @@ describe("CTagsProvider", () => {
 
   describe("when tags can be generated for a file", () => {
     beforeEach(async () => {
-      await atom.workspace.open(directory.resolve("sample.js"));
+      await lumine.workspace.open(directory.resolve("sample.js"));
       editor = getEditor();
     });
 
@@ -73,7 +73,7 @@ describe("CTagsProvider", () => {
 
   describe("when the buffer is new and unsaved", () => {
     beforeEach(async () => {
-      await atom.workspace.open();
+      await lumine.workspace.open();
       editor = getEditor();
     });
 
@@ -85,7 +85,7 @@ describe("CTagsProvider", () => {
 
   describe("when the buffer is modified", () => {
     beforeEach(async () => {
-      await atom.workspace.open(directory.resolve("sample.js"));
+      await lumine.workspace.open(directory.resolve("sample.js"));
       editor = getEditor();
     });
 
@@ -98,7 +98,7 @@ describe("CTagsProvider", () => {
 
   describe("when no tags can be generated for a file", () => {
     beforeEach(async () => {
-      await atom.workspace.open(directory.resolve("no-symbols.js"));
+      await lumine.workspace.open(directory.resolve("no-symbols.js"));
       editor = getEditor();
     });
 
@@ -111,14 +111,14 @@ describe("CTagsProvider", () => {
 
   describe("go to declaration", () => {
     it("returns nothing when no declaration is found", async () => {
-      await atom.workspace.open(directory.resolve("tagged.js"));
+      await lumine.workspace.open(directory.resolve("tagged.js"));
       editor = getEditor();
       editor.setCursorBufferPosition([0, 2]);
 
       let symbols = await provider.getSymbols({
         type: "project-find",
         editor,
-        paths: atom.project.getPaths(),
+        paths: lumine.project.getPaths(),
         word: editor.getWordUnderCursor(),
       });
 
@@ -126,14 +126,14 @@ describe("CTagsProvider", () => {
     });
 
     it("returns one result when there is a single matching declaration", async () => {
-      await atom.workspace.open(directory.resolve("tagged.js"));
+      await lumine.workspace.open(directory.resolve("tagged.js"));
       editor = getEditor();
 
       editor.setCursorBufferPosition([6, 24]);
       let symbols = await provider.getSymbols({
         type: "project-find",
         editor,
-        paths: atom.project.getPaths(),
+        paths: lumine.project.getPaths(),
         word: editor.getWordUnderCursor(),
       });
 
@@ -142,11 +142,11 @@ describe("CTagsProvider", () => {
     });
 
     it("correctly identifies the tag for a C preprocessor macro", async () => {
-      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-c-")]);
-      fs.copySync(path.join(__dirname, "fixtures", "c"), atom.project.getPaths()[0]);
+      lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-c-")]);
+      fs.copySync(path.join(__dirname, "fixtures", "c"), lumine.project.getPaths()[0]);
 
-      await atom.packages.activatePackage("language-c");
-      await atom.workspace.open("sample.c");
+      await lumine.packages.activatePackage("language-c");
+      await lumine.workspace.open("sample.c");
 
       editor = getEditor();
       editor.setCursorBufferPosition([4, 4]);
@@ -158,7 +158,7 @@ describe("CTagsProvider", () => {
     });
 
     it("ignores results that reference nonexistent files", async () => {
-      await atom.workspace.open(directory.resolve("tagged.js"));
+      await lumine.workspace.open(directory.resolve("tagged.js"));
       editor = getEditor();
       editor.setCursorBufferPosition([8, 14]);
 
@@ -169,11 +169,11 @@ describe("CTagsProvider", () => {
     });
 
     it("includes ? and ! characters in ruby symbols", async () => {
-      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
-      fs.copySync(path.join(__dirname, "fixtures", "ruby"), atom.project.getPaths()[0]);
+      lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
+      fs.copySync(path.join(__dirname, "fixtures", "ruby"), lumine.project.getPaths()[0]);
 
-      await atom.packages.activatePackage("language-ruby");
-      await atom.workspace.open("file1.rb");
+      await lumine.packages.activatePackage("language-ruby");
+      await lumine.workspace.open("file1.rb");
       let symbols;
 
       editor = getEditor();
@@ -200,11 +200,11 @@ describe("CTagsProvider", () => {
     });
 
     it("understands assignment ruby method definitions", async () => {
-      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
-      fs.copySync(path.join(__dirname, "fixtures", "ruby"), atom.project.getPaths()[0]);
+      lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
+      fs.copySync(path.join(__dirname, "fixtures", "ruby"), lumine.project.getPaths()[0]);
 
-      await atom.packages.activatePackage("language-ruby");
-      await atom.workspace.open("file1.rb");
+      await lumine.packages.activatePackage("language-ruby");
+      await lumine.workspace.open("file1.rb");
       let symbols;
 
       editor = getEditor();
@@ -231,11 +231,11 @@ describe("CTagsProvider", () => {
     });
 
     it("understands fully qualified ruby constant definitions", async () => {
-      atom.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
-      fs.copySync(path.join(__dirname, "fixtures", "ruby"), atom.project.getPaths()[0]);
+      lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
+      fs.copySync(path.join(__dirname, "fixtures", "ruby"), lumine.project.getPaths()[0]);
 
-      await atom.packages.activatePackage("language-ruby");
-      await atom.workspace.open("file1.rb");
+      await lumine.packages.activatePackage("language-ruby");
+      await lumine.workspace.open("file1.rb");
       let symbols;
 
       editor = getEditor();
@@ -259,7 +259,7 @@ describe("CTagsProvider", () => {
 
   describe("project symbols", () => {
     it("displays all tags", async () => {
-      await atom.workspace.open(directory.resolve("tagged.js"));
+      await lumine.workspace.open(directory.resolve("tagged.js"));
       editor = getEditor();
 
       let symbols = await getProjectSymbols(provider, editor);
