@@ -11,11 +11,11 @@ Provides symbols via universal-ctags.
 
 ## Installation
 
-To install `symbol-ctags` search for _symbol-ctags_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/symbol-ctags`.
+To install `symbol-ctags` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/symbol-ctags`.
 
 ## Services
 
-- **symbol.provider** (`1.0.0`): provided to supply symbols for a given file or project.
+- `symbol.provider`: provided to supply symbols for a given file or project.
 
 ## Contributing
 
