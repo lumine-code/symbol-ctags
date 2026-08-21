@@ -94,6 +94,12 @@ jobs:
       # The package's own checkout carries the native ctags addon; the editor's
       # rebuild only covers the editor tree, so build this one for the same
       # Electron ABI before the specs load it.
+      # Some specs activate packages the editor no longer bundles; the manifest
+      # names them in `specPackages` and this clones them into a scratch
+      # LUMINE_HOME, exporting it (and LUMINE_TEST_PACKAGES) for the spec step.
+      - name: Install spec dependency packages
+        working-directory: lumine
+        run: node script/install-spec-packages.js --package ../symbol-ctags --home "$RUNNER_TEMP/lumine-home" --github-env "$GITHUB_ENV"
       - name: Rebuild the package's native modules for Electron
         working-directory: lumine
         run: npx electron-rebuild -m ../symbol-ctags
