@@ -53,7 +53,7 @@
   "dependencies": {
     "@lumine-code/ctags": "github:lumine-code/node-ctags#2d22a0affb5c85dceedef36f1c6cf8ad42b5aad4",
     "@lumine-code/fs-plus": "github:lumine-code/fs-plus#85044c6ec927cf5429fea84c82ff7f90eeab0026",
-    "@lumine-code/underscore-plus": "github:lumine-code/underscore-plus#c3e51475a36b5e5533f21047337ee8893eb5cc21",
+    "@lumine-code/underscore-plus": "github:lumine-code/underscore-plus#3dcac0046d9ff5a3b42f3d83b997112ab38cd705",
     "async": "3.2.6"
   },
   "devDependencies": {
