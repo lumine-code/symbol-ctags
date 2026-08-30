@@ -65,9 +65,18 @@ describe("CTagsProvider", () => {
 
       expect(symbols[0].name).toBe("quicksort");
       expect(symbols[0].position.row).toEqual(0);
+      expect(symbols[0].tag).toBe("function");
 
       expect(symbols[1].name).toBe("quicksort.sort");
       expect(symbols[1].position.row).toEqual(1);
+      expect(symbols[1].tag).toBe("function");
+    });
+
+    it("trims the long ctags kind from generated tag lines", () => {
+      const symbol = provider.parseTagLine('work\tsample.js\t3;"\tmethod\r');
+      expect(symbol.name).toBe("work");
+      expect(symbol.position.row).toBe(2);
+      expect(symbol.tag).toBe("method");
     });
   });
 
