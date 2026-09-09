@@ -181,7 +181,9 @@ describe("CTagsProvider", () => {
       lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
       fs.copySync(path.join(__dirname, "fixtures", "ruby"), lumine.project.getPaths()[0]);
 
-      await lumine.packages.activatePackage("language-ruby");
+      await lumine.packages.activatePackage(
+        path.dirname(require.resolve("language-ruby/package.json")),
+      );
       await lumine.workspace.open("file1.rb");
       let symbols;
 
@@ -212,7 +214,9 @@ describe("CTagsProvider", () => {
       lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
       fs.copySync(path.join(__dirname, "fixtures", "ruby"), lumine.project.getPaths()[0]);
 
-      await lumine.packages.activatePackage("language-ruby");
+      await lumine.packages.activatePackage(
+        path.dirname(require.resolve("language-ruby/package.json")),
+      );
       await lumine.workspace.open("file1.rb");
       let symbols;
 
@@ -243,7 +247,9 @@ describe("CTagsProvider", () => {
       lumine.project.setPaths([temp.mkdirSync("symbol-ctags-spec-ruby-")]);
       fs.copySync(path.join(__dirname, "fixtures", "ruby"), lumine.project.getPaths()[0]);
 
-      await lumine.packages.activatePackage("language-ruby");
+      await lumine.packages.activatePackage(
+        path.dirname(require.resolve("language-ruby/package.json")),
+      );
       await lumine.workspace.open("file1.rb");
       let symbols;
 
