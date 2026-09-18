@@ -65,5 +65,8 @@
     "globals": "^17.11.0",
     "language-ruby": "github:lumine-code/language-ruby#0825ec19bf5af33088ddd4c579f7301a8a1a23eb",
     "prettier": "^3.9.6"
-  }
+  },
+  "activationHooks": [
+    "core:grammar-used"
+  ]
 }
