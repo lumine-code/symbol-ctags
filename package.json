@@ -51,19 +51,19 @@
     }
   },
   "dependencies": {
-    "@lumine-code/ctags": "github:lumine-code/node-ctags#1988d5347065400d9cc5fe876b478695c2e107fe",
-    "@lumine-code/fs-plus": "github:lumine-code/fs-plus#e05833b203c67843d40a6bc650224ec0ac412407",
-    "@lumine-code/underscore-plus": "github:lumine-code/underscore-plus#02d71a75193a1098c5f59d8ea7656a815ee3d712",
+    "@lumine-code/ctags": "github:lumine-code/node-ctags#bd126f8d9895b8c8365c35becf8bceb1b1bd8c26",
+    "@lumine-code/fs-plus": "github:lumine-code/fs-plus#83486ac8a670adb4381a9d4e2df3eb999f670ad1",
+    "@lumine-code/underscore-plus": "github:lumine-code/underscore-plus#1577303f839c11bd8d83d7fbe3cef8dd9219bfbb",
     "async": "3.2.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@lumine-code/temp": "github:lumine-code/node-temp#bbd9e24a78e835e7421c8acec360731eafa4d3f6",
+    "@lumine-code/temp": "github:lumine-code/node-temp#d952dc119d4dda6918a37c414302e6eb1dc9789d",
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^18.4.0",
     "globals": "^17.12.0",
-    "language-ruby": "github:lumine-code/language-ruby#366fcd1e566f612a8bdc0cf440456f6e12dde3b4",
+    "language-ruby": "github:lumine-code/language-ruby#2d2ae35837a99b6ad4a28a5f392c820c690096c7",
     "prettier": "^3.9.9"
   }
 }
