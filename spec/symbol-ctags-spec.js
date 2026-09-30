@@ -82,6 +82,56 @@ describe("CTagsProvider", () => {
     expect(read).not.toHaveBeenCalled();
   });
 
+  it("does not start ctags after its requesting split closes during source preparation", async () => {
+    editor = await lumine.workspace.open(directory.resolve("sample.js"));
+    spyOn(editor, "getGrammar").and.returnValue({ scopeName: "source.python.ipy" });
+    const other = lumine.workspace.buildTextEditor({ buffer: editor.getBuffer() });
+    let settle;
+    provider.getIPythonSource = () => ({
+      project: () =>
+        new Promise((resolve) => {
+          settle = resolve;
+        }),
+    });
+    const read = spyOn(provider, "getFileSymbols");
+    try {
+      const pending = provider.getSymbols({ type: "file", editor });
+      editor.destroy();
+      expect(other.getBuffer().isDestroyed()).toBe(false);
+      settle({ text: "def kept(): pass\n", isCurrent: () => true });
+      expect(await pending).toEqual([]);
+      expect(read).not.toHaveBeenCalled();
+    } finally {
+      other.destroy();
+    }
+  });
+
+  it("drops ctags results after the requesting split closes and removes its temporary source", async () => {
+    editor = await lumine.workspace.open(directory.resolve("sample.js"));
+    spyOn(editor, "getGrammar").and.returnValue({ scopeName: "source.python.ipy" });
+    const other = lumine.workspace.buildTextEditor({ buffer: editor.getBuffer() });
+    const projection = {
+      text: "def kept(): pass\n",
+      isCurrent: () => true,
+      isPythonPosition: () => true,
+    };
+    provider.getIPythonSource = () => ({ project: async () => projection });
+    let temporaryFile;
+    spyOn(provider, "getFileSymbols").and.callFake(async (_editor, filename) => {
+      temporaryFile = filename;
+      editor.destroy();
+      expect(other.getBuffer().isDestroyed()).toBe(false);
+      return [{ name: "kept", position: { row: 0, column: 0 } }];
+    });
+    try {
+      expect(await provider.getSymbols({ type: "file", editor })).toEqual([]);
+      expect(fs.existsSync(temporaryFile)).toBe(false);
+      expect(fs.existsSync(path.dirname(temporaryFile))).toBe(false);
+    } finally {
+      other.destroy();
+    }
+  });
+
   it("projects a closed IPython project source and releases its temporary buffer", async () => {
     const filename = directory.resolve("closed.ipy");
     fs.writeFileSync(filename, "# %% [raw]\nnot_python\n# %% Code\ndef actual(): pass\n");
