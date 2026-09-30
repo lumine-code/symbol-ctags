@@ -45,6 +45,62 @@ describe("CTagsProvider", () => {
     fs.copySync(path.join(__dirname, "fixtures", "js"), lumine.project.getPaths()[1]);
   });
 
+  afterEach(() => provider.destroy());
+
+  it("reads IPython file symbols from the current Python projection and removes the temporary file", async () => {
+    editor = await lumine.workspace.open(directory.resolve("sample.js"));
+    spyOn(editor, "getGrammar").and.returnValue({ scopeName: "source.python.ipy" });
+    const projection = {
+      text: "\n\ndef real_function(): pass\n",
+      isCurrent: () => true,
+      isPythonPosition: (position) => position.row === 2,
+    };
+    provider.getIPythonSource = () => ({ project: async () => projection });
+    let temporaryFile;
+    spyOn(provider, "getFileSymbols").and.callFake(async (actualEditor, filename, language) => {
+      expect(actualEditor).toBe(editor);
+      expect(language).toBe("Python");
+      temporaryFile = filename;
+      expect(fs.readFileSync(filename, "utf8")).toBe(projection.text);
+      return [
+        { name: "masked", position: { row: 0, column: 0 } },
+        { name: "real_function", position: { row: 2, column: 0 } },
+      ];
+    });
+    const symbols = await provider.getSymbols({ type: "file", editor });
+    expect(symbols.map((symbol) => symbol.name)).toEqual(["real_function"]);
+    expect(fs.existsSync(temporaryFile)).toBe(false);
+    expect(fs.existsSync(path.dirname(temporaryFile))).toBe(false);
+  });
+
+  it("does not read an unprojected IPython file when the source provider is unavailable", async () => {
+    editor = await lumine.workspace.open(directory.resolve("sample.js"));
+    spyOn(editor, "getGrammar").and.returnValue({ scopeName: "source.python.ipy" });
+    const read = spyOn(provider, "getFileSymbols");
+    expect(provider.canProvideSymbols({ type: "file", editor })).toBe(0);
+    expect(await provider.getSymbols({ type: "file", editor })).toEqual([]);
+    expect(read).not.toHaveBeenCalled();
+  });
+
+  it("projects a closed IPython project source and releases its temporary buffer", async () => {
+    const filename = directory.resolve("closed.ipy");
+    fs.writeFileSync(filename, "# %% [raw]\nnot_python\n# %% Code\ndef actual(): pass\n");
+    const dispose = jasmine.createSpy("dispose");
+    const snapshot = { text: "\n\n\ndef actual(): pass\n", isCurrent: () => true, dispose };
+    const projectText = jasmine.createSpy("projectText").and.resolveTo(snapshot);
+    provider.getIPythonSource = () => ({ projectText });
+    spyOn(provider, "getProjectionSymbols").and.resolveTo([
+      { name: "actual", position: { row: 3, column: 0 }, tag: "function" },
+    ]);
+    const symbols = await provider.getProjectedFileSymbols(filename);
+    expect(projectText).toHaveBeenCalledWith(fs.readFileSync(filename, "utf8"), {
+      filePath: filename,
+    });
+    expect(symbols[0].name).toBe("actual");
+    expect(symbols[0].file).toBe("closed.ipy");
+    expect(dispose).toHaveBeenCalledTimes(1);
+  });
+
   it("identifies its project root correctly", () => {
     let root = provider.getPackageRoot();
     expect(root).toContain("symbol-ctags");

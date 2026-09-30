@@ -16,6 +16,9 @@ To install `symbol-ctags` search for it in the Install pane of the Lumine settin
 ## Services
 
 - `symbol.provider`: provided to supply symbols for a given file or project.
+- `ipython.source`: consumed to generate file symbols from the Python portions of IPython buffers.
+
+For an open `.ipy` file, ctags reads a temporary Python projection of the current buffer and omits Markdown, raw and foreign magic bodies. When a project tags file names an `.ipy` source, its symbols are regenerated from a Python projection instead of trusting tags generated from unprojected disk text. Closed sources are processed sequentially and temporary buffers and files are released afterwards.
 
 ## Contributing
 

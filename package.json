@@ -26,6 +26,7 @@
     "node": ">=24"
   },
   "specPackages": [
+    "language-ipython",
     "language-ruby"
   ],
   "scripts": {
@@ -47,6 +48,13 @@
       "description": "Allows external sources to suggest symbols for a given file or project.",
       "versions": {
         "1.0.0": "provideSymbol"
+      }
+    }
+  },
+  "consumedServices": {
+    "ipython.source": {
+      "versions": {
+        "^1.0.0": "consumeIPythonSource"
       }
     }
   },
