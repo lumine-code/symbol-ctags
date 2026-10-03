@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("@lumine-code/fs-plus");
-const temp = require("@lumine-code/temp");
+const temp = require("@lumine-code/fs-temp");
 const CTagsProvider = require("../lib/ctags-provider");
 
 function getEditor() {
