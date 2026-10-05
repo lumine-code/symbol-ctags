@@ -1,6 +1,8 @@
 # symbol-ctags
 
-Provides symbols via universal-ctags.
+Provides symbols via ctags.
+
+This repository is archived and is no longer part of the maintained Lumine ecosystem. Use symbol-tree-sitter for current-buffer symbols and ide-client with a language backend for workspace symbols and definitions. The remaining source and service documentation describe the final historical implementation.
 
 ## Features
 
@@ -8,10 +10,6 @@ Provides symbols via universal-ctags.
 - **Project symbols**: reads a project tags file to list symbols across the whole project.
 - **Go to declaration**: resolves the word under the cursor to its declaration using the project tags file.
 - **Broad language support**: works with any language present in its ctags config file.
-
-## Installation
-
-To install `symbol-ctags` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/symbol-ctags`.
 
 ## Services
 

@@ -2,13 +2,13 @@
   "name": "symbol-ctags",
   "author": "lumine-code",
   "version": "1.0.0",
-  "description": "Provides symbols via universal-ctags.",
+  "description": "Provides symbols via ctags.",
   "keywords": [
     "navigation",
     "tags-file",
     "declaration",
     "outline",
-    "universal-ctags"
+    "exuberant-ctags"
   ],
   "repository": "https://github.com/lumine-code/symbol-ctags",
   "bugs": {
