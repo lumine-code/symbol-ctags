@@ -2,6 +2,8 @@
 
 Provides symbols via ctags.
 
+Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/symbol-provider-ctags`).
+
 This repository is archived and is no longer part of the maintained Lumine ecosystem. Use symbol-tree-sitter for current-buffer symbols and ide-client with a language backend for workspace symbols and definitions. The remaining source and service documentation describe the final historical implementation.
 
 ## Features
